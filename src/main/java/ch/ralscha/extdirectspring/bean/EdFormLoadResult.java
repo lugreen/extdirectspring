@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package ch.ralscha.extdirectspring.bean;
+
+import javax.annotation.Nullable;
 
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -234,20 +234,20 @@ public abstract class EdFormPostResult {
 		 * @param field the name of the field
 		 * @param errors a collection of error messages
 		 */
-		private Map<String, List<String>> helper = new LinkedHashMap<String, List<String>>();
+		private final Map<String, List<String>> helper = new LinkedHashMap<String, List<String>>();
 
 		public Builder addErrors(String field, List<String> errors) {
 			Assert.notNull(field, "field must not be null");
 			Assert.notNull(errors, "field must not be null");
 
-			List<String> fieldErrors = helper.get(field);
+			List<String> fieldErrors = this.helper.get(field);
 			if (fieldErrors == null) {
 				fieldErrors = new ArrayList<String>();
-				helper.put(field, fieldErrors);
+				this.helper.put(field, fieldErrors);
 			}
 			fieldErrors.addAll(errors);
 
-			putResult(ERRORS_PROPERTY, helper);
+			putResult(ERRORS_PROPERTY, this.helper);
 			putResult(SUCCESS_PROPERTY, Boolean.FALSE);
 
 			return this;

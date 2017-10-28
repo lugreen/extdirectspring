@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -377,8 +377,20 @@ public class RouterController {
 				.isStreamResponse() || directResponse.isStreamResponse();
 		Class<?> jsonView = directResponse.getJsonView();
 
-		writeJsonResponse(response, Collections.singleton(directResponse), jsonView,
-				streamResponse);
+		Object responseObject;
+		if (jsonView == null) {
+			responseObject = Collections.singleton(directResponse);
+		}
+		else {
+			ObjectMapper objectMapper = this.configurationService.getJsonHandler()
+					.getMapper();
+			String jsonResult = objectMapper.writerWithView(jsonView)
+					.writeValueAsString(directResponse.getResult());
+			responseObject = Collections
+					.singleton(new ExtDirectResponseRaw(directResponse, jsonResult));
+		}
+
+		writeJsonResponse(response, responseObject, null, streamResponse);
 	}
 
 	private void handleMethodCallsSequential(List<ExtDirectRequest> directRequests,

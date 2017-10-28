@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,8 @@ public final class MethodInfo {
 			this.parameters = buildParameterList(clazz, method);
 
 			this.collectionType = extDirectMethodAnnotation.entryClass() == Object.class
-					? null : extDirectMethodAnnotation.entryClass();
+					? null
+					: extDirectMethodAnnotation.entryClass();
 
 			if (this.collectionType == null) {
 				for (ParameterInfo parameter : this.parameters) {
@@ -235,11 +236,13 @@ public final class MethodInfo {
 			if (null != docParameters) {
 				String[] params = docParameters.params();
 				String[] descriptions = docParameters.descriptions() == null
-						? new String[params.length] : docParameters.descriptions();
+						? new String[params.length]
+						: docParameters.descriptions();
 				if (params.length == descriptions.length) {
 					for (int i = 0; i < params.length; i++) {
-						actionDoc.getParameters().put(params[i], descriptions[i] == null
-								? "No description" : descriptions[i]);
+						actionDoc.getParameters().put(params[i],
+								descriptions[i] == null ? "No description"
+										: descriptions[i]);
 					}
 				}
 				else {
@@ -251,7 +254,8 @@ public final class MethodInfo {
 			if (null != docReturn) {
 				String[] properties = docReturn.properties();
 				String[] descriptions = docReturn.descriptions() == null
-						? new String[properties.length] : docReturn.descriptions();
+						? new String[properties.length]
+						: docReturn.descriptions();
 				if (properties.length == descriptions.length) {
 					for (int i = 0; i < properties.length; i++) {
 						actionDoc.getReturnMethod().put(properties[i],

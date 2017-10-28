@@ -4,5 +4,7 @@
 /.project
 /.idea
 /.factorypath
-extdirectspring.iml
-pomJdyun.xml
+/.apt_generated/
+*.iml
+cmd_deploy_settings.xml
+cmd_deploy.bat

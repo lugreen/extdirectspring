@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,8 @@ public final class ParameterInfo {
 
 		Annotation[] paramAnnotations = methodParam.getParameterAnnotations();
 
-		for (Annotation paramAnn : paramAnnotations) {
+		for (Annotation annotation : paramAnnotations) {
+			Annotation paramAnn = AnnotationUtils.synthesizeAnnotation(annotation, clazz);
 
 			this.hasRequestParamAnnotation = false;
 			this.hasMetadataParamAnnotation = false;
@@ -132,8 +133,8 @@ public final class ParameterInfo {
 				this.hasCookieValueAnnotation = true;
 				break;
 			}
-			else if (paramAnn.annotationType().getName()
-					.equals("org.springframework.security.web.bind.annotation.AuthenticationPrincipal")
+			else if (paramAnn.annotationType().getName().equals(
+					"org.springframework.security.web.bind.annotation.AuthenticationPrincipal")
 					|| paramAnn.annotationType().getName().equals(
 							"org.springframework.security.core.annotation.AuthenticationPrincipal")) {
 				this.hasAuthenticationPrincipalAnnotation = (Boolean) AnnotationUtils
@@ -180,7 +181,8 @@ public final class ParameterInfo {
 
 	public boolean authenticationPrincipalAnnotationErrorOnInvalidType() {
 		return this.hasAuthenticationPrincipalAnnotation != null
-				? this.hasAuthenticationPrincipalAnnotation : false;
+				? this.hasAuthenticationPrincipalAnnotation
+				: false;
 	}
 
 	public boolean isRequired() {

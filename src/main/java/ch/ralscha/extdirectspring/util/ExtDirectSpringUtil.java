@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -205,6 +205,8 @@ public final class ExtDirectSpringUtil {
 		String ifNoneMatch = request.getHeader("If-None-Match");
 		String etag = "\"0" + DigestUtils.md5DigestAsHex(data) + "\"";
 
+		addCacheHeaders(response, etag, 6);
+
 		if (etag.equals(ifNoneMatch)) {
 			response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
 			return;
@@ -212,8 +214,6 @@ public final class ExtDirectSpringUtil {
 
 		response.setContentType(contentType);
 		response.setContentLength(data.length);
-
-		addCacheHeaders(response, etag, 6);
 
 		@SuppressWarnings("resource")
 		ServletOutputStream out = response.getOutputStream();

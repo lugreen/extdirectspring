@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2016 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2017 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -270,6 +270,24 @@ public class RouterControllerStoreTest {
 		assertThat(storeResponse.getTotal()).isEqualTo(100L);
 		assertThat(storeResponse.getRecords()).hasSize(10);
 		int id = 10;
+		for (Row row : storeResponse.getRecords()) {
+			assertThat(row.getId()).isEqualTo(id);
+			id++;
+		}
+
+		storeRead = new LinkedHashMap<String, Object>();
+		storeRead.put("query", "");
+		groupInfo = new LinkedHashMap<String, Object>();
+		groupInfo.put("property", "id");
+		groupInfo.put("direction", "ASC");
+		storeRead.put("group", groupInfo);
+		storeRead.put("limit", "10");
+		storeRead.put("start", "10");
+		storeResponse = executeWithExtDirectStoreReadRequest(storeRead);
+
+		assertThat(storeResponse.getTotal()).isEqualTo(100L);
+		assertThat(storeResponse.getRecords()).hasSize(10);
+		id = 10;
 		for (Row row : storeResponse.getRecords()) {
 			assertThat(row.getId()).isEqualTo(id);
 			id++;
